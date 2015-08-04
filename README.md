@@ -53,3 +53,6 @@ ex.
 
 
 교양;교양;Culture or  education;敎養;
+
+REFERENCE/Credit:
+I used the sqllite dictionary from 	dayjaby's Yomichan Korean support pull request. Thank you!
