@@ -15,6 +15,8 @@ TODO:
   ex. $python3 look_up.py filename.txt
 2. The text file should be korean words sperated by new lines.
 ex. 
+
+
 한국\n
 
 
@@ -26,6 +28,8 @@ ex.
 
 3. write definitions to file
 ex. 
+
+
 총;총;all,entire,whole, A gun;;
 
 
