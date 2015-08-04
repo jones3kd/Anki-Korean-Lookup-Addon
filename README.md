@@ -3,7 +3,7 @@ This is an add on that will let you define Korean words using online Korean dict
 
 Work in Progress
 The functionality right now works only on the commandline and creates a textfile separated by semicolons with the
-orginal Korean word, korean dictionary form, english definition, and hanja is there is any. Right now I'm using this as a bases bfore I add support with Anki, plus anyone can use it right now to lookup Korean words and just import into Anki in the meantime. :D
+orginal Korean word, korean dictionary form, english definition, and hanja is there is any. Right now I'm using this as a base before I add support with Anki, plus anyone can use it right now to lookup Korean words and just import into Anki in the meantime. :D
 
 TODO: 
 1.Add support for adding words directly into Anki.
