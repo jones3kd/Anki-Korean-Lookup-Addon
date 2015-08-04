@@ -8,11 +8,15 @@ orginal Korean word, korean dictionary form, english definition, and hanja is th
 TODO: 
 1.Add support for adding words directly into Anki.
   User will select from GUI which deck and fields to add definitions to
+  
+  
 2.Paste Korean words directly into GUI and start lookup of words
 
 1. Pass txt filename as argument when running the program
   if don't specifiy argument it will try to open file.txt by default
   ex. $python3 look_up.py filename.txt
+
+
 2. The text file should be korean words sperated by new lines.
 ex. 
 
