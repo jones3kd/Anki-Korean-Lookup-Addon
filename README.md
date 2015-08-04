@@ -16,14 +16,32 @@ TODO:
 2. The text file should be korean words sperated by new lines.
 ex. 
 한국\n
+
+
 엄마\n
+
+
 절\n
+
+
 3. write definitions to file
 ex. 
 총;총;all,entire,whole, A gun;;
+
+
 누적시청자수;누적시청자수;The cumulative number of viewers;;
+
+
 구독;구독;Subscribe;;
+
+
 수현;수혈; ①  give a blood transfusion ②  blood transfusion ③  transfuse   blood  ;;
+
+
 간지;간지;interleaf, craft, guile;奸智,干支, 奸智,干支;
+
+
 펼침;arpeggio; ①  develop ②  unfold ③  revolve ④  launch ⑤  deploy  ;;
+
+
 교양;교양;Culture or  education;敎養;
