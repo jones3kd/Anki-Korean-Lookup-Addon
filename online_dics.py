@@ -74,7 +74,7 @@ class DaumDict:
             else:
                 return None
             
-            if eng_def_children is not None or len(eng_def_children) > 0:
+            if eng_def_children is not None and len(eng_def_children) > 0:
                 for child in eng_def_children:
                     eng_def += child.string + ' '
 
