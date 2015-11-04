@@ -22,7 +22,7 @@ Being able to import cards directly
 --
 TO DO
 rewrite code and methods so get word
-and return list of 
+and return list of
 ----
 
 
@@ -33,7 +33,8 @@ are testing things out :) .
 """
 import sys
 import sqlite3
-from online_dics import DaumDict, MyMem
+from dics.online_dics import MyMem
+from dics.daum import DaumDict
 
 class LookUp:
     """
@@ -44,8 +45,8 @@ class LookUp:
     ㅇㅗ
     ㅇㅓ
     """
-    UNSUCCESS = []
-    
+
+
     def __init__(self):
         """
         ?
@@ -54,12 +55,14 @@ class LookUp:
         self.define_methods = [self._lookup_dic, self._lookup_daum,
                                self._lookup_mymem]
 
+        self.UNSUCCESS = []
+
         #urls to visit
         self.urls = {}
         self.urls['daum'] = 'http://dic.daum.net/search.do?q=[word]&dic=eng'
         self.daum_dict = DaumDict()
         self.mymem = MyMem()
-        
+
     def _lookup_kengdic(self, word):
         """
         Uses the postgres kengdic to look up the korean word
@@ -72,19 +75,21 @@ class LookUp:
 
         returns UNSUCCESS or the results
         """
+        print("inside lookup mymem")
         results = self.mymem.get_def(word)
 
         if results is not None:
             return results
         else:
             return self.UNSUCCESS
-        
+
     def _lookup_daum(self, word):
         """
         Lookup the word using the daum dictionary class
 
         returns True or False if added english def to output file
         """
+        print("inside lookup daum")
         results = self.daum_dict.get_def(word)
 
         if results is not None:
@@ -99,6 +104,7 @@ class LookUp:
         returns True for successful or False for unable to get any results from
         the dictionary
         """
+        print("inside lookup sqllite dic")
         #connect to db
         try:
             self.db = sqlite3.connect(self.db_name)
@@ -106,15 +112,15 @@ class LookUp:
             cursor.execute('SELECT * FROM Terms WHERE Expression = ?',(word,))
             results = cursor.fetchall()
         except Exception as e:
-            print("Not found in sqlite dictionary..")
-            return False
+            #print("Not found in sqlite dictionary..")
+            return self.UNSUCCESS
 
         #add results to output_file
         if len(results) > 0:
             return results
         else:
             return self.UNSUCCESS
-        
+
     def _return_formatted_results(self, def_list, org_word):
         """
         Adds the orginal word, all definitions and dicitonary forms and hanja
@@ -133,23 +139,23 @@ class LookUp:
 
         if(len(def_list) < 1):#if empty list dont add
             return 0
-        
+
         eng_def = ''
         hanja = ''
         dict_form = def_list[0][0]
-        
+
         for tup in def_list:
             if(len(eng_def) > 1):
                     eng_def += ', '
-                    
+
             eng_def += ('%s'%tup[1])
             temp_hanja = tup[2]
-            
+
             if temp_hanja != 'NULL' and temp_hanja is not None:
                 if(len(hanja) > 1):
                     hanja += ', '
                 hanja += ('%s'%temp_hanja)
-                
+
         results = [org_word,dict_form,eng_def,hanja]
 
         return results
@@ -191,7 +197,7 @@ class LookUp:
 
         result/output file:
         orginal_word;dictionary_form; eng_def; hanja;
-        
+
         총;총;all,entire,whole, A gun;;
         누적시청자수;누적시청자수;The cumulative number of viewers;;
         구독;구독;Subscribe;;
@@ -199,13 +205,13 @@ class LookUp:
         간지;간지;interleaf, craft, guile;奸智,干支, 奸智,干支;
         펼침;arpeggio; ① develop ② unfold ③ revolve ④ launch ⑤ deploy ;;
         교양;교양;Culture or education;敎養;
-        
+
         """
         #TODO do error checking for filename and output filename
 
 
-        
-        
+
+
         #open file and start reading line by line/word by word
         try:
             file = open(filename, 'r')
@@ -219,7 +225,7 @@ class LookUp:
 
         #open output file
         out_file = open(output_filename, 'w')
-        
+
         #delete contents if already exists
         out_file.truncate()
 
@@ -243,16 +249,27 @@ class LookUp:
 
                         for value in results:
                             out_file.write('%s;'%value)
-                            
+
                         out_file.write('\n')
-                        break 
-                    
+                        break
+
         #close output_file
         out_file.close()
 
 look_up = LookUp()
 #look_up.write_def_to_file("test_daum.txt", "out.txt")
-kor_word = input("Enter Korean word to search: ")
-print(str(look_up.get_def(kor_word)))
+cont = True
+while cont:
+    print("Main menu. type 'd' to look up words one by one.\n Type 'f' to "
+          "look up words in a file and form an outfile of the definitions. 'q' is quit")
 
-    
+    key = input(": ")
+
+    if(key == 'q'):
+        cont = False
+    elif key == 'f':
+        look_up.write_def_to_file()
+        print("wrote defitions to file")
+    elif key == 'd':
+        kor_word = input("Enter Korean word to search: ")
+        print(str(look_up.get_def(kor_word)))
